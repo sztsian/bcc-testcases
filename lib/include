@@ -18,4 +18,4 @@ assertFileNotContains(){
 }
 
 
-. ./shunit2
+. $(dirname $0)/../lib/shunit2
