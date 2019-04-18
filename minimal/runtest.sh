@@ -3,11 +3,6 @@
 bccprefix=$(rpm -ql bcc-tools | grep tools | head -n 1)
 BCCPATH=${bccpath:-${bccprefix}}
 
-assertPass(){
-$@
-assertEquals '$@ failed' 0 $?
-}
-
 test_biolatency(){
     assertPass ${BCCPATH}/biolatency 1 10 &> builatency.log
 }
@@ -48,5 +43,4 @@ test_wakeuptime(){
     assertPass ${BCCPATH}/wakeuptime 5 &> wakeuptime.log
 }
 
-
-. ./shunit2
+. $(dirname $0)/../lib/include

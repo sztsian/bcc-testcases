@@ -9,23 +9,6 @@ rm -rf ${LOGPREFIX}
 mkdir -p ${LOGPREFIX}
 }
 
-assertPass(){
-    $@
-    assertEquals '$@ failed' 0 $?
-}
-
-# assertFileContains
-# Param1: Filename
-# Param2: pattern
-assertFileContains(){
-    egrep $2 $1 | grep -v 'grep' &>/dev/null
-    assertEquals 'Missing content in file' 0 $?
-}
-assertFileNotContains(){
-    egrep $2 $1 | grep -v 'grep' &>/dev/null
-    assertEquals 'File should not contain the keyword' 1 $?
-}
-
 test_execsnoop(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
     ${BCCPATH}/execsnoop &> ${logfile} &
@@ -86,4 +69,4 @@ test_execsnoop_l(){
 
 
 
-. $(dirname $0)/../shunit2
+. $(dirname $0)/../lib/include
