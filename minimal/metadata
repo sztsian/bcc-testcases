@@ -1,0 +1,12 @@
+[General]
+name=bcc-tools-tests-minimal
+owner="Zamir SUN"
+description="Minimal tests for bcc tools"
+
+[restraint]
+entry_point=./runtest.sh
+repoRequires=lib
+dependencies=bcc-tools
+max_time=60m
+use_pty=true
+
