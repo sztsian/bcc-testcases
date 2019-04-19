@@ -46,18 +46,18 @@ test_opensnoop_p(){
     #assertFileNotContains ${logfile} "error|Error|ERROR|Fail|FAIL|fail"
 }
 
-# In this test, you should have a user 'tests'
+# In this test, you should have a user 'test'
 test_opensnoop_u(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
-    exec ${BCCPATH}/opensnoop -Uu $(id -u tests) &> ${logfile} &
+    exec ${BCCPATH}/opensnoop -Uu $(id -u test) &> ${logfile} &
     tpid=$!
     sleep 3
-    su - tests -c "systemctl status dbus &>/dev/null"
+    su - test -c "systemctl status dbus &>/dev/null"
     systemctl status dbus &>/dev/null
     /usr/bin/kill -INT $tpid
     sleep 3
     assertFileContains ${logfile} 'UID'
-    assertFileContains ${logfile} $(id -u tests)
+    assertFileContains ${logfile} $(id -u test)
     assertFileNotContains ${logfile} "^0"
 }
 

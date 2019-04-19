@@ -7,6 +7,7 @@ LOGPREFIX=$(dirname $0)/logs/$(basename $0)
 oneTimeSetUp(){
 rm -rf ${LOGPREFIX}
 mkdir -p ${LOGPREFIX}
+ps -ef | grep '/usr/share/bcc' | grep -v grep | awk '{print $2}' | xargs /usr/bin/kill -9 {} &> /dev/null || true
 }
 
 test_execsnoop(){
@@ -15,7 +16,7 @@ test_execsnoop(){
     tpid=$!
     sleep 3
     ls -l &>/dev/null
-    kill -INT $tpid
+    /usr/bin/kill -INT $tpid
     sleep 3
     assertFileContains ${logfile} ls
     #assertFileNotContains ${logfile} "error|Error|ERROR|Fail|FAIL|fail"
@@ -27,7 +28,7 @@ test_execsnoop_x(){
     tpid=$!
     sleep 3
     /noexist -v &>/dev/null
-    kill -INT $tpid
+    /usr/bin/kill -INT $tpid
     sleep 3
     assertFileContains ${logfile} noexist
     #assertFileNotContains ${logfile} "error|Error|ERROR|Fail|FAIL|fail"
@@ -40,7 +41,7 @@ test_execsnoop_n(){
     sleep 3
     /noexist -v &>/dev/null
     ls &>/dev/null
-    kill -INT $tpid
+    /usr/bin/kill -INT $tpid
     sleep 3
     assertFileContains ${logfile} ls
     assertFileNotContains ${logfile} sleep
@@ -58,7 +59,7 @@ test_execsnoop_l(){
     ls testpkg &>/dev/null
     rmdir testpkg
     touch /tmp/test
-    kill -INT $tpid
+    /usr/bin/kill -INT $tpid
     sleep 3
     assertFileContains ${logfile} mkdir
     assertFileContains ${logfile} rmdir
