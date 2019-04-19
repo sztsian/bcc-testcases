@@ -1,0 +1,12 @@
+[General]
+name=bcc-tools-tests-sanity
+owner="Zamir SUN"
+description="Sanity test for bcc-tools based on upstream tutorial.md"
+
+[restraint]
+entry_point=./runtest.sh
+repoRequires=lib
+dependencies=bcc-tools
+max_time=60m
+use_pty=true
+
