@@ -3,6 +3,11 @@
 bccprefix=$(rpm -ql bcc-tools | grep tools | head -n 1)
 BCCPATH=${bccpath:-${bccprefix}}
 
+oneTimeTearDown(){
+    . $(dirname $0)/../lib/testframeworks
+    uploadlogs
+}
+
 test_biolatency(){
     assertPass ${BCCPATH}/biolatency 1 10 &> builatency.log
 }
