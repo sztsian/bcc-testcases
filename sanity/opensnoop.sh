@@ -48,6 +48,7 @@ test_opensnoop_p(){
 
 # In this test, you should have a user 'test'
 test_opensnoop_u(){
+if id test &>/dev/null ; then
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
     exec ${BCCPATH}/opensnoop -Uu $(id -u test) &> ${logfile} &
     tpid=$!
@@ -59,6 +60,10 @@ test_opensnoop_u(){
     assertFileContains ${logfile} 'UID'
     assertFileContains ${logfile} $(id -u test)
     assertFileNotContains ${logfile} "^0"
+else
+	startSkipping
+	endSkipping
+fi
 }
 
 test_opensnoop_x(){
