@@ -17,7 +17,7 @@ createfsslow(){
 }
 
 destroyfsslow(){
-	umount ${FSSLOWPATH}
+	umount ${FSSLOWPATH} &>/dev/null
 	dmsetup remove delayed
 	modprobe -r brd
 	rm -rf ${FSSLOWPATH}
