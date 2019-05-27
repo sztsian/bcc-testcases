@@ -22,6 +22,7 @@ test_biolatency_mT(){
     dd if=/dev/zero of=${FSSLOWPATH}/${FUNCNAME[ 0 ]}.test count=500000
     umount ${FSSLOWPATH}
     sleep 13
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} msecs
     assertFileContains ${logfile} '|'
     destroyfsslow
@@ -39,6 +40,7 @@ test_biolatency_D(){
     sleep 3
     /usr/bin/kill -INT $tpid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} disk
     destroyfsslow
 }
@@ -57,6 +59,7 @@ if [ $? -eq 0 ] ; then
     sleep 3
     /usr/bin/kill -INT $tpid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} flags
     destroyfsslow
 else

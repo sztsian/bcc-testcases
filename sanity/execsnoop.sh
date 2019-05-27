@@ -18,6 +18,7 @@ test_execsnoop(){
     ls -l &>/dev/null
     /usr/bin/kill -INT $tpid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} ls
     #assertFileNotContains ${logfile} "error|Error|ERROR|Fail|FAIL|fail"
 }
@@ -30,6 +31,7 @@ test_execsnoop_x(){
     /noexist -v &>/dev/null
     /usr/bin/kill -INT $tpid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} noexist
     #assertFileNotContains ${logfile} "error|Error|ERROR|Fail|FAIL|fail"
 }
@@ -43,6 +45,7 @@ test_execsnoop_n(){
     ls &>/dev/null
     /usr/bin/kill -INT $tpid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} ls
     assertFileNotContains ${logfile} sleep
     assertFileNotContains ${logfile} noexist
@@ -61,6 +64,7 @@ test_execsnoop_l(){
     touch /tmp/test
     /usr/bin/kill -INT $tpid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} mkdir
     assertFileContains ${logfile} rmdir
     assertFileContains ${logfile} ls

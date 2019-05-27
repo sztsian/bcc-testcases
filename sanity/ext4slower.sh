@@ -15,6 +15,7 @@ ps -ef | grep '/usr/share/bcc' | grep -v grep | awk '{print $2}' | xargs /usr/bi
 test_ext4slower_h(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
     ${BCCPATH}/ext4slower -h &> ${logfile}
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} usage
 }
 
@@ -30,6 +31,7 @@ test_ext4slower(){
     sleep 3
     /usr/bin/kill -INT $tpid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} dd
     destroyfsslow
 }
@@ -47,6 +49,7 @@ test_ext4slower_num(){
     sleep 3
     /usr/bin/kill -INT $tpid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileNotContains ${logfile} dd
     destroyfsslow
 }

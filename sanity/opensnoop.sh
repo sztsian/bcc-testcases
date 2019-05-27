@@ -13,6 +13,7 @@ ps -ef | grep '/usr/share/bcc' | grep -v grep | awk '{print $2}' | xargs /usr/bi
 test_opensnoop_h(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
     ${BCCPATH}/opensnoop -h &> ${logfile}
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} usage
 }
 
@@ -26,6 +27,7 @@ test_opensnoop(){
     sleep 2
     /usr/bin/kill -INT $tpid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} dbus
     #assertFileNotContains ${logfile} "error|Error|ERROR|Fail|FAIL|fail"
 }
@@ -41,6 +43,7 @@ test_opensnoop_p(){
     /usr/bin/kill -INT $tpid
     /usr/bin/kill -9 $topid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} biotop
     assertFileNotContains ${logfile} dbus
     #assertFileNotContains ${logfile} "error|Error|ERROR|Fail|FAIL|fail"
@@ -57,6 +60,7 @@ if id test &>/dev/null ; then
     systemctl status dbus &>/dev/null
     /usr/bin/kill -INT $tpid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} 'UID'
     assertFileContains ${logfile} $(id -u test)
     assertFileNotContains ${logfile} "^0"
@@ -75,6 +79,7 @@ test_opensnoop_x(){
     sleep 2
     /usr/bin/kill -INT $tpid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} 'df'
 }
 
@@ -82,6 +87,7 @@ test_opensnoop_d(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
     ${BCCPATH}/opensnoop -d 2 &> ${logfile}
     sleep 5
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} PID
 }
 
@@ -95,6 +101,7 @@ test_opensnoop_n(){
     rm /tmp/passwd
     /usr/bin/kill -INT $tpid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} sed
 }
 
@@ -107,6 +114,7 @@ test_opensnoop_e(){
     sleep 2
     /usr/bin/kill -INT $tpid
     sleep 3
+    assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} 'df'
     assertFileContains ${logfile} FLAGS
 }
