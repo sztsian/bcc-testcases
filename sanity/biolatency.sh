@@ -20,7 +20,7 @@ test_biolatency_mT(){
     tpid=$!
     sleep 3
     dd if=/dev/zero of=${FSSLOWPATH}/${FUNCNAME[ 0 ]}.test count=500000
-    rm -f ${FSSLOWPATH}/${FUNCNAME[ 0 ]}.test
+    umount ${FSSLOWPATH}
     sleep 13
     assertFileContains ${logfile} msecs
     assertFileContains ${logfile} '|'
@@ -35,7 +35,7 @@ test_biolatency_D(){
     tpid=$!
     sleep 3
     dd if=/dev/zero of=${FSSLOWPATH}/${FUNCNAME[ 0 ]}.test count=500000
-    rm -f ${FSSLOWPATH}/${FUNCNAME[ 0 ]}.test
+    umount ${FSSLOWPATH}
     sleep 3
     /usr/bin/kill -INT $tpid
     sleep 3
@@ -53,7 +53,7 @@ if [ $? -eq 0 ] ; then
     tpid=$!
     sleep 3
     dd if=/dev/zero of=${FSSLOWPATH}/${FUNCNAME[ 0 ]}.test count=500000
-    rm -f ${FSSLOWPATH}/${FUNCNAME[ 0 ]}.test
+    umount ${FSSLOWPATH}
     sleep 3
     /usr/bin/kill -INT $tpid
     sleep 3

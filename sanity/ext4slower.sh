@@ -26,7 +26,7 @@ test_ext4slower(){
     tpid=$!
     sleep 5
     dd if=/dev/zero of=${FSSLOWPATH}/${FUNCNAME[ 0 ]}.test count=500000
-    rm -f ${FSSLOWPATH}/${FUNCNAME[ 0 ]}.test
+    umount ${FSSLOWPATH}
     sleep 3
     /usr/bin/kill -INT $tpid
     sleep 3
@@ -43,7 +43,7 @@ test_ext4slower_num(){
     sleep 5
     cp /boot/vmlinuz-$(uname -r) ${FSSLOWPATH}
     dd if=/dev/zero of=${FSSLOWPATH}/${FUNCNAME[ 0 ]}.test count=500000
-    rm -f ${FSSLOWPATH}/${FUNCNAME[ 0 ]}.test
+    umount ${FSSLOWPATH}
     sleep 3
     /usr/bin/kill -INT $tpid
     sleep 3
