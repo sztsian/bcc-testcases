@@ -1,0 +1,12 @@
+[General]
+name=bcc-tools-tests-kprobe
+owner="Zamir SUN"
+description="Test exit code of bcc scripts that uses kprobe"
+
+[restraint]
+entry_point=./runtest.sh
+repoRequires=lib
+dependencies=bcc-tools
+max_time=60m
+use_pty=true
+
