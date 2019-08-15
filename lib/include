@@ -5,6 +5,28 @@ assertPass(){
     assertEquals '$@ failed' 0 $?
 }
 
+assertPassInt(){
+    $@ &
+    pid=$!;
+    sleep 5
+    kill -0 $pid
+    assertEquals '$@ exited early' 0 $?
+    kill -INT $pid
+    assertEquals '$@ failed' 0 $?
+    wait $pid
+    assertEquals '$@ returned $?' 0 $?
+}
+
+assertPassTerm(){
+    $@ &
+    pid=$!;
+    sleep 5
+    kill -0 $pid
+    assertEquals '$@ exited early' 0 $?
+    kill -TERM $pid
+    assertEquals '$@ failed' 0 $?
+}
+
 # assertFileContains
 # Param1: Filename
 # Param2: pattern
