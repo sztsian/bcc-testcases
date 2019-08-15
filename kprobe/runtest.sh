@@ -124,12 +124,14 @@ test_mountsnoop(){
 
 test_nfsdist(){
     modprobe nfs
+    modprobe nfsv4
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
     assertPass ${BCCPATH}/nfsdist 2 2 &> ${logfile}
 }
 
 test_nfsslower(){
     modprobe nfs
+    modprobe nfsv4
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
     assertPassInt ${BCCPATH}/nfsslower &> ${logfile}
 }
