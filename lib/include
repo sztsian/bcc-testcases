@@ -73,5 +73,11 @@ assertFileNotContains(){
     assertEquals 'File should not contain the keyword' 1 $?
 }
 
+skipIfNotExist(){
+    if ! [ -f $@ ]; then
+        startSkipping
+    fi
+}
+
 
 . $(dirname $0)/../lib/shunit2
