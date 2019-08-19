@@ -17,6 +17,18 @@ assertPassInt(){
     assertEquals '$@ returned $?' 0 $?
 }
 
+assertPassInt15(){
+    $@ &
+    pid=$!;
+    sleep 15
+    kill -0 $pid
+    assertEquals '$@ exited early' 0 $?
+    kill -INT $pid
+    assertEquals '$@ failed' 0 $?
+    wait $pid
+    assertEquals '$@ returned $?' 0 $?
+}
+
 assertPassTerm(){
     $@ &
     pid=$!;
@@ -27,6 +39,28 @@ assertPassTerm(){
     assertEquals '$@ failed' 0 $?
 }
 
+assertPassIntCurses(){
+    export cursescmd=$@
+    expect << 'EOF'
+set timeout 10
+spawn  $env(cursescmd)
+expect {
+ timeout     { send \x03 }
+ eof
+}
+
+foreach {pid spawnid os_error_flag value} [wait] break
+
+if {$os_error_flag == 0} {
+    puts "exit status: $value"
+    exit $value
+} else {
+    puts "errno: $value"
+    exit $value
+}
+EOF
+    assertEquals '$@ failed' 0 $?
+}
 # assertFileContains
 # Param1: Filename
 # Param2: pattern
