@@ -47,7 +47,7 @@ test_cachestat(){
 
 test_cachetop(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
-    assertPassInt ${BCCPATH}/cachetop &> ${logfile}
+    assertPassIntCurses ${BCCPATH}/cachetop &> ${logfile}
 }
 
 test_cpudist(){
@@ -183,7 +183,7 @@ test_sofdsnoop(){
 
 test_solisten(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
-    assertPassInt ${BCCPATH}/solisten &> ${logfile}
+    assertPassInt15 ${BCCPATH}/solisten &> ${logfile}
 }
 
 test_syncsnoop(){
@@ -193,27 +193,27 @@ test_syncsnoop(){
 
 test_tcpconnect(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
-    assertPassInt ${BCCPATH}/tcpconnect &> ${logfile}
+    assertPassInt15 ${BCCPATH}/tcpconnect &> ${logfile}
 }
 
 test_tcpconnlat(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
-    assertPassInt ${BCCPATH}/tcpconnlat &> ${logfile}
+    assertPassInt15 ${BCCPATH}/tcpconnlat &> ${logfile}
 }
 
 test_tcplife(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
-    assertPassInt ${BCCPATH}/tcplife &> ${logfile}
+    assertPassInt15 ${BCCPATH}/tcplife &> ${logfile}
 }
 
 test_tcpretrans_l(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
-    assertPassInt ${BCCPATH}/tcpretrans -l &> ${logfile}
+    assertPassInt15 ${BCCPATH}/tcpretrans -l &> ${logfile}
 }
 
 test_tcpsubnet(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
-    assertPassInt ${BCCPATH}/tcpsubnet &> ${logfile}
+    assertPassInt15 ${BCCPATH}/tcpsubnet &> ${logfile}
 }
 
 test_tcptop(){
@@ -225,15 +225,7 @@ test_tcptop(){
 # so do not use assertPassInt
 test_tcptracer(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
-    ${BCCPATH}/tcptracer &> ${logfile} &
-    pid=$!;
-    sleep 10
-    kill -0 $pid
-    assertEquals '${FUNCNAME[ 0 ]} exited early' 0 $?
-    kill -INT $pid
-    assertEquals '${FUNCNAME[ 0 ]} failed' 0 $?
-    wait $pid
-    assertEquals '${FUNCNAME[ 0 ]} returned $?' 0 $?
+    assertPassInt15 ${BCCPATH}/tcptracer &> ${logfile} &
 }
 
 test_ttysnoop(){

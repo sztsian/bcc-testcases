@@ -6,7 +6,7 @@ description="Test exit code of bcc scripts that uses kprobe"
 [restraint]
 entry_point=./runtest.sh
 repoRequires=lib
-dependencies=bcc-tools
+dependencies=bcc-tools;expect
 max_time=60m
 use_pty=true
 
