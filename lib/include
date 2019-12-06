@@ -14,7 +14,6 @@ assertPassInt(){
     kill -INT $pid
     assertEquals '$@ failed' 0 $?
     wait $pid
-    assertEquals '$@ returned $?' 0 $?
 }
 
 assertPassInt15(){
@@ -26,7 +25,6 @@ assertPassInt15(){
     kill -INT $pid
     assertEquals '$@ failed' 0 $?
     wait $pid
-    assertEquals '$@ returned $?' 0 $?
 }
 
 assertPassTerm(){
@@ -36,7 +34,6 @@ assertPassTerm(){
     kill -0 $pid
     assertEquals '$@ exited early' 0 $?
     kill -TERM $pid
-    assertEquals '$@ failed' 0 $?
 }
 
 assertPassIntCurses(){
@@ -79,5 +76,13 @@ skipIfNotExist(){
     fi
 }
 
+assertPassOrKeyboardInt(){
+    rtr=$1
+    logfile=$2
+    funcname=$3
+    if [ "${rtr}" != "0" ] && ( ! grep 'KeyboardInterrupt' ${logfile}); then
+        fail "${funcname}"
+    fi
+}
 
 . $(dirname $0)/../lib/shunit2
