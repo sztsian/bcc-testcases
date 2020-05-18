@@ -33,4 +33,4 @@ $(METADATA):
 	@echo "Description: 	Test kprobe related bcc scripts." >>$(METADATA)
 	@echo "TestTime:	60m" >>$(METADATA)
 
-rhts-lint $(METADATA)
+	rhts-lint $(METADATA)
