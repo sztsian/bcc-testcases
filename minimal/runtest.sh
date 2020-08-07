@@ -47,5 +47,10 @@ test_tplist(){
 test_wakeuptime(){
     assertPass ${BCCPATH}/wakeuptime 5 &> wakeuptime.log
 }
+test_deadlock(){
+    skipIfNotExist ${BCCPATH}/$(echo ${FUNCNAME[ 0 ]} | awk -F '_' '{print $2}')
+    assertPassTerm ${BCCPATH}/deadlock --binary /usr/lib64/libpthread.so.0 $(pidof auditd)  &> deadlock.log
+    assertPassOrKeyboardInt $? deadlock.log $(echo ${FUNCNAME[ 0 ]} | awk -F '_' '{print $2}')
+}
 
 . $(dirname $0)/../lib/include
