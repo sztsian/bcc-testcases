@@ -52,5 +52,13 @@ test_deadlock(){
     assertPassTerm ${BCCPATH}/deadlock --binary /usr/lib64/libpthread.so.0 $(pidof auditd)  &> deadlock.log
     assertPassOrKeyboardInt $? deadlock.log $(echo ${FUNCNAME[ 0 ]} | awk -F '_' '{print $2}')
 }
+test_klockstat(){
+    skipIfNotExist ${BCCPATH}/$(echo ${FUNCNAME[ 0 ]} | awk -F '_' '{print $2}')
+    assertPass ${BCCPATH}/klockstat -d 5 &> klockstat.log
+}
+test_vfsstat(){
+    skipIfNotExist ${BCCPATH}/$(echo ${FUNCNAME[ 0 ]} | awk -F '_' '{print $2}')
+    assertPass ${BCCPATH}/vfsstat 5 2 &> vfsstat.log
+}
 
 . $(dirname $0)/../lib/include
