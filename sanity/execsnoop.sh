@@ -14,10 +14,10 @@ test_execsnoop(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
     ${BCCPATH}/execsnoop &> ${logfile} &
     tpid=$!
-    sleep 3
+    sleep 5
     ls -l &>/dev/null
-    /usr/bin/kill -INT $tpid
-    sleep 3
+    /usr/bin/kill -TERM $tpid
+    wait $tpid
     assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} ls
     #assertFileNotContains ${logfile} "error|Error|ERROR|Fail|FAIL|fail"
@@ -27,10 +27,10 @@ test_execsnoop_x(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
     ${BCCPATH}/execsnoop -x &> ${logfile} &
     tpid=$!
-    sleep 3
+    sleep 5
     /noexist -v &>/dev/null
-    /usr/bin/kill -INT $tpid
-    sleep 3
+    /usr/bin/kill -TERM $tpid
+    wait $tpid
     assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} noexist
     #assertFileNotContains ${logfile} "error|Error|ERROR|Fail|FAIL|fail"
@@ -40,11 +40,11 @@ test_execsnoop_n(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
     ${BCCPATH}/execsnoop -n ls &> ${logfile} &
     tpid=$!
-    sleep 3
+    sleep 5
     /noexist -v &>/dev/null
     ls &>/dev/null
-    /usr/bin/kill -INT $tpid
-    sleep 3
+    /usr/bin/kill -TERM $tpid
+    wait $tpid
     assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} ls
     assertFileNotContains ${logfile} sleep
@@ -56,14 +56,14 @@ test_execsnoop_l(){
     logfile=${LOGPREFIX}/${FUNCNAME[ 0 ]}.log
     ${BCCPATH}/execsnoop -l testpkg &> ${logfile} &
     tpid=$!
-    sleep 3
+    sleep 5
     /noexist -v &>/dev/null
     mkdir testpkg
     ls testpkg &>/dev/null
     rmdir testpkg
     touch /tmp/test
-    /usr/bin/kill -INT $tpid
-    sleep 3
+    /usr/bin/kill -TERM $tpid
+    wait $tpid
     assertTrue "log should not be empty" "[ -s ${logfile} ]"
     assertFileContains ${logfile} mkdir
     assertFileContains ${logfile} rmdir
