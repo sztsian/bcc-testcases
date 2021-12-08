@@ -4,7 +4,7 @@
 
 rtr=0
 
-for i in $(ls *.sh | grep -v runtest.sh) ; do
+for i in $(ls *.sh | grep -v runtest.sh | grep -v everythingelse) ; do
     echo $i
     ./$i
     rtr1=$?
